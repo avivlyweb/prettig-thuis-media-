@@ -1,0 +1,54 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+*/
+
+export interface Quest {
+  quest_id: string;
+  title: string;
+  description: string;
+  icf_codes: string[];
+  category: "Nuttig" | "Leuk en actief" | "Ontspannen en passief" | "Uitdagend" | "Mobility" | "Cognition" | "Sensory" | "Hydration" | "Leisure" | "Daily Routine" | "Safety" | "Memory" | "Self-care" | "Social" | "Mobiliteit" | "Geheugen" | "Vrije tijd" | "Dagelijkse Routine" | "Veiligheid" | "Hydratatie" | "Sociaal";
+  dementia_stage?: "mild" | "moderate" | "severe";
+  difficulty: "Low" | "Medium" | "High";
+  cooldown_minutes: number;
+  tags: ("morning" | "midday" | "afternoon" | "evening" | "anytime")[];
+}
+
+export const quests: Quest[] = [
+  { "quest_id": "Q006", "title": "Strek je Armen", "description": "Til je armen boven je hoofd en houd ze 5 seconden vast.", "icf_codes": ["b710", "d445"], "category": "Mobility", "difficulty": "Low", "cooldown_minutes": 60, "tags": ["morning"] },
+  { "quest_id": "Q015", "title": "Schrijf je Naam", "description": "Schrijf je naam op een stuk papier.", "icf_codes": ["d170", "b140"], "category": "Cognition", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["anytime"] },
+  { "quest_id": "Q017", "title": "Ruik de Bloemen", "description": "Vind iets met een lekkere geur en neem een diepe ademhaling.", "icf_codes": ["b156", "b310"], "category": "Sensory", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["anytime"] },
+  { "quest_id": "Q001", "title": "Drink een Glas Water", "description": "Vul een glas met water en drink het nu op.", "icf_codes": ["d570", "b510"], "category": "Hydration", "difficulty": "Low", "cooldown_minutes": 60, "tags": ["morning", "afternoon"] },
+  { "quest_id": "Q011", "title": "Balans Uitdaging", "description": "Sta 10 seconden met je voeten bij elkaar zonder vast te houden. Gebruik steun indien nodig.", "icf_codes": ["b770", "d410"], "category": "Mobility", "difficulty": "Medium", "cooldown_minutes": 240, "tags": ["morning"] },
+  { "quest_id": "Q002", "title": "Loop naar het Raam", "description": "Neem 10 langzame stappen naar het dichtstbijzijnde raam en kijk naar buiten.", "icf_codes": ["d450", "b770"], "category": "Mobility", "difficulty": "Low", "cooldown_minutes": 60, "tags": ["morning", "afternoon"] },
+  { "quest_id": "Q008", "title": "Luister naar Muziek", "description": "Speel een favoriete liedje af en geniet er 5 minuten van.", "icf_codes": ["d920", "b152"], "category": "Leisure", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["anytime"] },
+  { "quest_id": "Q020", "title": "Klap op de Maat", "description": "Speel een liedje af en klap mee op het ritme.", "icf_codes": ["b152", "d920"], "category": "Leisure", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["afternoon", "evening"] },
+  { "quest_id": "Q007", "title": "Organiseer een Lade", "description": "Ruim een lade op in je keuken of slaapkamer.", "icf_codes": ["d640", "d650"], "category": "Daily Routine", "difficulty": "Medium", "cooldown_minutes": 720, "tags": ["afternoon"] },
+  { "quest_id": "Q016", "title": "Doe 5 Arm Cirkels", "description": "Maak langzame cirkels met je armen, vooruit en achteruit.", "icf_codes": ["b710", "d445"], "category": "Mobility", "difficulty": "Low", "cooldown_minutes": 60, "tags": ["morning"] },
+  { "quest_id": "Q004", "title": "Controleer de Gang", "description": "Kijk naar voorwerpen in de gang die je zouden kunnen doen struikelen.", "icf_codes": ["e155", "d460"], "category": "Safety", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["morning", "evening"] },
+  { "quest_id": "Q010", "title": "Geheugen Spel", "description": "Vind en noem drie voorwerpen in je woonkamer.", "icf_codes": ["b144", "d160"], "category": "Memory", "difficulty": "Low", "cooldown_minutes": 120, "tags": ["anytime"] },
+  { "quest_id": "Q018", "title": "Zeg de Datum", "description": "Zeg de datum van vandaag hardop.", "icf_codes": ["b144", "d350"], "category": "Memory", "difficulty": "Low", "cooldown_minutes": 120, "tags": ["morning"] },
+  { "quest_id": "Q009", "title": "Controleer de Koelkast", "description": "Zoek naar verlopen voedsel en gooi het weg.", "icf_codes": ["d630", "d640"], "category": "Daily Routine", "difficulty": "Medium", "cooldown_minutes": 720, "tags": ["midday"] },
+  { "quest_id": "Q013", "title": "Maak Thee of Koffie", "description": "Bereid een warme drank voor jezelf.", "icf_codes": ["d630", "d640"], "category": "Self-care", "difficulty": "Medium", "cooldown_minutes": 480, "tags": ["midday", "afternoon"] },
+  { "quest_id": "Q012", "title": "Bekijk Oude Foto's", "description": "Besteed 5 minuten aan het bekijken van een fotoalbum.", "icf_codes": ["b144", "d920"], "category": "Memory", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["evening"] },
+  { "quest_id": "Q014", "title": "Controleer Verlichting", "description": "Doe alle gangverlichting aan en controleer of het werkt.", "icf_codes": ["e155", "d460"], "category": "Safety", "difficulty": "Low", "cooldown_minutes": 720, "tags": ["evening"] },
+  { "quest_id": "Q005", "title": "Bel een Vriend", "description": "Gebruik je telefoon om een vriend te bellen en hallo te zeggen.", "icf_codes": ["d360", "e125"], "category": "Social", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["afternoon"] },
+  { "quest_id": "Q019", "title": "Veeg de Tafel Af", "description": "Maak het oppervlak van je keuken- of eettafel schoon.", "icf_codes": ["d640", "d650"], "category": "Daily Routine", "difficulty": "Low", "cooldown_minutes": 480, "tags": ["midday"] },
+  { "quest_id": "Q003", "title": "Noem Drie Vrienden", "description": "Zeg de namen van drie vrienden of familieleden hardop.", "icf_codes": ["b144", "d350"], "category": "Memory", "difficulty": "Low", "cooldown_minutes": 120, "tags": ["anytime"] },
+  { "quest_id": "mob_walk_mild", "title": "Maak een korte wandeling", "description": "Een wandeling in de buurt helpt om actief te blijven. Let op de mooie bloemen in de tuinen.", "icf_codes": ["d450"], "category": "Leuk en actief", "difficulty": "Low", "cooldown_minutes": 180, "tags": ["morning", "afternoon"], "dementia_stage": "mild" },
+  { "quest_id": "self_lotion_moderate", "title": "Handen insmeren", "description": "Verzorg je handen door ze rustig in te smeren met een lekker ruikende lotion.", "icf_codes": ["d5"], "category": "Ontspannen en passief", "difficulty": "Low", "cooldown_minutes": 120, "tags": ["evening", "anytime"], "dementia_stage": "moderate" },
+  { "quest_id": "comm_sing_severe", "title": "Samen een liedje zingen", "description": "Zing een bekend liedje van vroeger, zoals 'In de maneschijn'. Zingen maakt vrolijk.", "icf_codes": ["d3"], "category": "Leuk en actief", "difficulty": "Low", "cooldown_minutes": 60, "tags": ["anytime"], "dementia_stage": "severe" },
+  { "quest_id": "house_fold_laundry_moderate", "title": "Was opvouwen", "description": "Een rustig en nuttig werkje. Help mee met het opvouwen van handdoeken of theedoeken.", "icf_codes": ["d640"], "category": "Nuttig", "difficulty": "Low", "cooldown_minutes": 180, "tags": ["midday", "afternoon"], "dementia_stage": "moderate" },
+  { "quest_id": "mob_gym_moderate", "title": "Ochtendgymnastiek op de stoel", "description": "Begin de dag met wat lichte rekoefeningen terwijl je op een stoel zit. Strek je armen en benen rustig uit.", "icf_codes": ["d450"], "category": "Leuk en actief", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["morning"], "dementia_stage": "moderate" },
+  { "quest_id": "inter_call_family_mild", "title": "Bel een familielid", "description": "Contact houden is fijn. Bel een familielid of een goede vriend op om even bij te praten.", "icf_codes": ["d7"], "category": "Leuk en actief", "difficulty": "Medium", "cooldown_minutes": 240, "tags": ["anytime"], "dementia_stage": "mild" },
+  { "quest_id": "cog_proverbs_moderate", "title": "Spreekwoorden afmaken", "description": "Laten we een bekend spreekwoord proberen af te maken. Bijvoorbeeld: 'Beter één vogel in de hand...'", "icf_codes": ["b144"], "category": "Uitdagend", "difficulty": "Medium", "cooldown_minutes": 60, "tags": ["anytime"], "dementia_stage": "moderate" },
+  { "quest_id": "house_veg_mild", "title": "Groenten wassen voor het eten", "description": "Help mee met de voorbereiding van het avondeten door de groenten te wassen. Een kleine, nuttige taak.", "icf_codes": ["d640"], "category": "Nuttig", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["afternoon"], "dementia_stage": "mild" },
+  { "quest_id": "house_set_table_mild", "title": "Tafel dekken", "description": "Help mee met het dekken van de tafel voor de maaltijd. Waar moeten de borden en het bestek liggen?", "icf_codes": ["d640"], "category": "Nuttig", "difficulty": "Low", "cooldown_minutes": 180, "tags": ["midday", "evening"], "dementia_stage": "mild" },
+  { "quest_id": "comm_photos_moderate", "title": "Bekijk het fotoalbum", "description": "Pak een fotoalbum en haal herinneringen op. Wie staan er op de foto's en wat gebeurde er toen?", "icf_codes": ["d3", "d7"], "category": "Ontspannen en passief", "difficulty": "Low", "cooldown_minutes": 120, "tags": ["anytime"], "dementia_stage": "moderate" },
+  { "quest_id": "cog_puzzle_mild", "title": "Maak een legpuzzel", "description": "Neem de tijd voor een legpuzzel. Begin met de randjes, dat helpt om overzicht te krijgen.", "icf_codes": ["b144"], "category": "Uitdagend", "difficulty": "Medium", "cooldown_minutes": 120, "tags": ["afternoon"], "dementia_stage": "mild" },
+  { "quest_id": "self_dress_assist_severe", "title": "Kleding uitkiezen", "description": "Kies samen een comfortabele outfit voor vandaag. Welke kleur wil je vandaag dragen?", "icf_codes": ["d5"], "category": "Nuttig", "difficulty": "Low", "cooldown_minutes": 240, "tags": ["morning"], "dementia_stage": "severe" },
+  { "quest_id": "comm_read_newspaper_mild", "title": "Lees een artikel voor", "description": "Pak de krant en lees een kort artikel hardop voor. Goed voor de stem en de geest.", "icf_codes": ["d3"], "category": "Uitdagend", "difficulty": "Medium", "cooldown_minutes": 180, "tags": ["morning", "midday"], "dementia_stage": "mild" },
+  { "quest_id": "leisure_paint_severe", "title": "Schilderen met waterverf", "description": "Laat je creativiteit de vrije loop met waterverf op een vel papier. Het gaat niet om het resultaat, maar om het plezier.", "icf_codes": ["d9"], "category": "Leuk en actief", "difficulty": "Medium", "cooldown_minutes": 120, "tags": ["afternoon"], "dementia_stage": "severe" },
+  { "quest_id": "leisure_music_moderate", "title": "Luister naar je favoriete muziek", "description": "Zet een plaat of een lijst op met muziek van vroeger. Muziek roept vaak mooie herinneringen op.", "icf_codes": ["d9"], "category": "Ontspannen en passief", "difficulty": "Low", "cooldown_minutes": 60, "tags": ["anytime"], "dementia_stage": "moderate" }
+];

@@ -1,0 +1,7 @@
+{
+  "name": "Prettig Thuis",
+  "description": "An ICF-aligned daily activity planner inspired by the 'Prettig Thuis' concept. Caregivers can create visual storyboards for daily tasks and record personalized, reassuring audio messages in their own voice to support and empower users.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
