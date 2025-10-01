@@ -13,6 +13,18 @@ if (!API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
+/**
+ * Custom error class for handling specific Gemini API errors.
+ */
+export class GeminiError extends Error {
+    public userFriendlyMessage: string;
+
+    constructor(message: string, userFriendlyMessage: string) {
+        super(message);
+        this.name = 'GeminiError';
+        this.userFriendlyMessage = userFriendlyMessage;
+    }
+}
 
 // --- Helper Functions ---
 
@@ -31,6 +43,14 @@ function getFallbackPrompt(activity: string): string {
  * @returns A data URL string for the generated image.
  */
 function processGeminiResponse(response: GenerateContentResponse): string {
+    const finishReason = response.candidates?.[0]?.finishReason;
+    if (finishReason === 'SAFETY') {
+        throw new GeminiError(
+            `Generation failed due to safety reasons.`,
+            'De beschrijving werd als ongepast gemarkeerd. Probeer het met andere woorden.'
+        );
+    }
+    
     const imagePartFromResponse = response.candidates?.[0]?.content?.parts?.find(part => part.inlineData);
 
     if (imagePartFromResponse?.inlineData) {
@@ -40,7 +60,10 @@ function processGeminiResponse(response: GenerateContentResponse): string {
 
     const textResponse = response.text;
     console.error("API did not return an image. Response:", textResponse);
-    throw new Error(`The AI model responded with text instead of an image: "${textResponse || 'No text response received.'}"`);
+    throw new GeminiError(
+        `The AI model responded with text instead of an image: "${textResponse || 'No text response received.'}"`,
+        'Het is niet gelukt een afbeelding te maken. De AI gaf een onverwacht antwoord. Probeer een andere activiteit.'
+    );
 }
 
 /**
@@ -110,37 +133,31 @@ export async function generateActivityStrip(personImageDataUrl: string, activity
     
     parts.push({ text: primaryPrompt });
 
-    // --- First attempt with the original prompt ---
     try {
         console.log("Attempting generation with original prompt...");
         const response = await callGeminiWithRetry(parts);
         return processGeminiResponse(response);
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
-        const isNoImageError = errorMessage.includes("The AI model responded with text instead of an image");
-
-        if (isNoImageError) {
-            console.warn("Original prompt was likely blocked. Trying a fallback prompt.");
-            
-            // --- Second attempt with the fallback prompt ---
-            try {
-                const fallbackPrompt = getFallbackPrompt(activity);
-                console.log(`Attempting generation with fallback prompt for "${activity}"...`);
-                // Rebuild parts with only the person image and the new fallback text
-                const fallbackParts: Part[] = [
-                    createPart(personImageDataUrl),
-                    { text: fallbackPrompt }
-                ];
-                const fallbackResponse = await callGeminiWithRetry(fallbackParts);
-                return processGeminiResponse(fallbackResponse);
-            } catch (fallbackError) {
-                console.error("Fallback prompt also failed.", fallbackError);
-                const finalErrorMessage = fallbackError instanceof Error ? fallbackError.message : String(fallbackError);
-                throw new Error(`The AI model failed with both original and fallback prompts. Last error: ${finalErrorMessage}`);
-            }
-        } else {
-            console.error("An unrecoverable error occurred during image generation.", error);
-            throw new Error(`The AI model failed to generate an image. Details: ${errorMessage}`);
+         if (error instanceof GeminiError) {
+            // This error already has a user-friendly message, so just re-throw it.
+            throw error;
         }
+
+        console.error("An unrecoverable error occurred during image generation.", error);
+        const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
+        
+        // Check for safety keywords in the raw error message as a fallback.
+        if (errorMessage.toLowerCase().includes('safety')) {
+             throw new GeminiError(
+                `Generation failed due to safety reasons: ${errorMessage}`,
+                'De beschrijving werd als ongepast gemarkeerd. Probeer het met andere woorden.'
+            );
+        }
+
+        // Generic fallback for everything else (e.g., network errors, final 500s).
+        throw new GeminiError(
+            `The AI model failed to generate an image. Details: ${errorMessage}`,
+            'Er is een technische fout opgetreden bij het maken van de afbeelding. Controleer uw internetverbinding en probeer het later opnieuw.'
+        );
     }
 }
